@@ -1,0 +1,204 @@
+<!-- Modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <p class="headTitle">
+                        <mat-icon>queue</mat-icon>Añade los links para tus redes sociales
+                    </p>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div style="background-color: #171717; color: white; padding: 20px; border-radius: 5px;">
+                    <div style="display: flex; align-items: flex-end;">
+                        <mat-icon>face</mat-icon> Red social a añadir:
+                    </div>
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                        <mat-label>
+                            <mat-icon>add_link</mat-icon>
+                            URL
+                        </mat-label>
+
+                        <input matInput placeholder="www.facebook.com" [(ngModel)]="_redsociallink">
+
+                    </mat-form-field>
+                    <label for="iconoSoc" style="cursor: pointer; color: white;">
+                      Selecciona un icono para definir tu red social:
+                      <div class="imgicon" id="boxImgIcon" >
+                      </div>
+                    </label>
+                    <br>
+                    <input type="file" (change)="encodeIconileAsURL('iconoSoc', 'boxImgIcon')" id="iconoSoc" [(ngModel)]="iconoSoc" name="iconoSoc" class="form-control">
+                    <div>
+                        <hr>
+                        <h5 class="mt-2 mb-2"> Redes Sociales creadas </h5>
+                        <ul class="list-group">
+                            <li class="lisoc list-group-item" *ngFor="let c of socMedArr">
+                                <strong> Nombre: </strong> <input class="insoc" type="text" [value]="c.social_med_account">
+                                <div style="display: flex; align-items: center;">
+                                    <strong> <mat-icon> party_mode </mat-icon> </strong>
+                                    <div class="iconimg" [ngStyle]="{'background-image': 'url(&quot;' + c.icono + '&quot;)'}"></div>
+                                </div>
+                                <button (click)="delsoc(c.id)" class="btn btn-danger"> <mat-icon>delete</mat-icon> </button>
+                                <!-- <button class="btn btn-info"> <mat-icon>cached</mat-icon> </button> -->
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="postsoc(_redsociallink)">Guardar cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid p-0 head" [ngStyle]="{'background-color': _bgColor}" style="display: flex;">
+    <button class="btn btn-danger" (click)="closeSession()">
+      <mat-icon> highlight_off </mat-icon>
+    </button>
+    <button class="btn btn-warning" (click)="boolColor = !boolColor">
+    <mat-icon>
+      color_lens
+    </mat-icon>
+    </button>
+    <input *ngIf="boolColor" type="color" style="height: 40px;" [(ngModel)]="_bgColor" (change)="changeColor(_bgColor)">
+    <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">Revisar Servicios</button>
+    <button class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2">Configurar redes sociales</button>
+</div>
+<div class="container-fluid pt-4 containFunctions" [ngStyle]="{'background-color': _bgColor, 'height': '1000px'}">
+
+    <div class="container p-3 dbs">
+        <h3 style="display: flex; align-items: flex-end;">
+            <mat-icon>layers</mat-icon> Crea una categoría</h3> |
+        <strong class="text-text-success">  {{categoriasel}} </strong>
+        <span class="note">Antes de comenzar selecciona una
+           categoría para añadir servicios
+          los servicios correspondientes
+        </span>
+
+        <br>
+
+        <div class="divsInpts">
+            <mat-form-field class="example-full-width">
+                <mat-label> Categoría Nueva: </mat-label>
+                <input matInput [(ngModel)]="_cat" placeholder="Crea una categoría" style="border-bottom: solid 1px gray !important;">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label> Describe tu categoría: </mat-label>
+                <input matInput [(ngModel)]="_descCats" placeholder="Descripción" style="border-bottom: solid 1px gray !important;">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label> Usuario creador: </mat-label>
+                <input matInput [(ngModel)]="_userCats" disabled style="border-bottom: solid 1px gray !important;">
+            </mat-form-field>
+        </div>
+        <button class="btn btn-primary" (click)="saveCategoria()">
+      <mat-icon>add_circle_outline</mat-icon>
+      Categoria
+    </button>
+        <!-- <input type="text" [(ngModel)]="_cat"> -->
+        <br>
+        <div class="lisAll">
+            <ul>
+                <ol class="list-group list-group-numbered">
+                    <li *ngFor=" let cats of arrSaveCats " data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="getCat(cats.categoria);" class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-bold">
+                                {{cats.categoria}}
+                                <button class="btn btn-danger" (click)="delCategoria(cats.categoria)">
+                      <mat-icon>
+                        remove_circle_outline
+                      </mat-icon>
+                      Eliminar
+                    </button>
+                            </div>
+
+                        </div>
+                        <span class="badge bg-primary rounded-pill">{{cants}}</span>
+                    </li>
+                </ol>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    {{categoriasel}}
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="containercateg" *ngIf="catsBool">
+                    <div>
+                        <label for="nServ">Nombre del servicio:</label><br>
+                        <input type="text" id="nServ" [(ngModel)]="_nServ" name="_nServ" class="form-control">
+                    </div>
+                    <div>
+                        <div class="divsInpts">
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Leave a comment</mat-label>
+                                <textarea rows="5" cols="45" [(ngModel)]="_dServ" matInput placeholder="Descripción del servicio"></textarea>
+                            </mat-form-field>
+                            <!-- <textarea rows="5" cols="45" id="dServ" name="_dServ" class="form-control"></textarea> -->
+                        </div>
+                    </div>
+                    <div>
+                        <label for="img">
+                          Foto:<hr>
+                        <div class="img" id="boxImg" ></div>
+                        </label><br>
+                        <input type="file" (change)="encodeImageFileAsURLA('img', 'boxImg')" id="img" [(ngModel)]="_fServ" name="_fServ" class="form-control">
+                    </div>
+
+                    <div>
+                        <label for="pServ">Precio:</label><br>
+                        <input type="number" id="pServ" [(ngModel)]="_pServ" name="_pServ" class="form-control">
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <button id="ver" class="btn btn-warning" >Actualizar </button> -->
+                <button class="btn btn-success" id="ver" class="btn btn-success" (click)="saveServices()">
+                  Crear Servicio
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasTopLabel" style="display: flex; justify-content: stretch; align-items: flex-end;">
+            <mat-icon>list_alt</mat-icon>
+            <strong>Servicios creados</strong>
+        </h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <hr>
+        <ul>
+            <li *ngFor="let a of arrServsGet" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="getServicesID(a.id, 'boxImg')">
+                {{a.nombre_servicio}}
+                <div class="listsClass">
+                    <button class="btn btn-secondary" (click)="delServices(a.id)"><mat-icon>close</mat-icon></button>
+                    <button id="ver" class="btn btn-warning" (click)="updateService(a.id)">Actualizar </button>
+                </div>
+            </li>
+        </ul>
+    </div>
+    {{dateNow | date: 'short' }}
+</div>
+
+<footer class="foots" [ngStyle]="{'background-color': fColor}"></footer>

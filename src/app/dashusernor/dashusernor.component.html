@@ -1,0 +1,89 @@
+<div class="inputsSearch">
+    <mat-form-field class="example-full-width">
+        <mat-label>
+            <mat-icon>search</mat-icon> Buscar servicio:</mat-label>
+        <input matInput style="color: white;" [(ngModel)]="_services" (keyup.enter)="getcat(_services)" placeholder="Buscar servicio por categoria presiona la tecla enter">
+    </mat-form-field>
+    <button class="btn btn-outline-warning" style="float: right;" (click)="getcat(_services)"><mat-icon>search</mat-icon></button>
+    <span class="note" style="margin-bottom: 10px;"> <mat-icon>article</mat-icon> Busca el servicio por la categoría seleccionada </span>
+</div>
+<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
+  <mat-icon>local_offer</mat-icon> Buscar Categorìa...
+</button>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+
+    <div class="offcanvas-header">
+        <h6 id="offcanvasTopLabel">
+            <mat-icon>local_offer</mat-icon> Escoge una categoria para ver sus servicios.
+        </h6>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body">
+        <div class="container-fluid p-3">
+            <div class="catsSearchDiv" style="display: flex; flex-direction: column; justify-content: flex-end;">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Buscar categoría:</mat-label>
+                    <input matInput style="color: white;" placeholder="Buscar categoría presiona la tecla enter" [(ngModel)]="_catID" (keyup.enter)="getCatID(_catID)">
+                </mat-form-field>
+
+                <button class="btn btn-warning" (click)="getCatID(_catID)">
+                    <mat-icon>search</mat-icon> Buscar categoría
+                </button>
+            </div>
+            <ol class="list-group list-group-numbered">
+                <li (click)="getCatID(cats.categoria)" *ngFor="let cats of arrSaveCats" class="list-group-item">
+                    {{cats.categoria}}
+                </li>
+            </ol>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="container">
+
+    <br> Categoria seleccionada:
+    <strong>{{catSelect}}</strong>
+
+    <div class="container contsServis">
+
+        <!-- <div *ngFor="let x of arrSaveCats">
+            {{x.nombre_servicio}}
+        </div> -->
+
+
+        <div class="card" style="width: 18rem;" *ngFor="let x of arrSaveCats">
+            <div class="boxServices" [ngStyle]="{'background-image': 'url(&quot;' + x.foto_servicio + '&quot;)'}"></div>
+            <div class="card-body">
+                <h5 class="card-title">{{x.nombre_servicio}} </h5>
+                <p class="card-text">{{x.descripcion_servicio}}</p>
+                <div><strong> $..{{x.precio}} </strong></div>
+            </div>
+        </div>
+
+        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+        <!-- <div class="servicios" *ngIf="_boolServices">
+        <div class="boxServices" [ngStyle]="{'background-image': 'url(&quot;' + b.foto_servicio + '&quot;)'}" *ngFor="let b of serviCats">
+          <div class="descripServs">
+            <strong class="title"> {{b.nombre_servicio}} </strong>
+            <hr style="border-color: white;">
+            <p class="des">{{b.descripcion_servicio}} </p>
+            <br> <strong> $..{{b.precio}} </strong>
+          </div>
+        </div>
+      </div> -->
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <div class="redsoc" *ngFor="let soc of arrsoc">
+        <a [href]="soc.social_med_account">
+            <img [src]="soc.icono" width="25px" height="auto" target="_blank">
+        </a>
+    </div>
+</footer>

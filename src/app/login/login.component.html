@@ -1,0 +1,18 @@
+<div class="logDiv container mt-4">
+
+    <p style="color: orange; display: flex; justify-content: align-items;">
+        <mat-icon>https</mat-icon> Login </p>
+    <hr style="border: solid 2px white;">
+
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Nombre</mat-label>
+        <input style="color: white;" matInput [(ngModel)]="user" placeholder=" Usuario ">
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Password</mat-label>
+        <input style="color: white;" matInput [(ngModel)]="pass" placeholder=" ********* ">
+    </mat-form-field>
+    <button class="btn btn-warning" (click)="uplog()">
+      Ingresar
+    </button>
+</div>
